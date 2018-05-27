@@ -5,6 +5,19 @@ Console::Console(int gl, int pl):grid_length(gl),panel_length(pl){}
 void Console::init(){
 	init_grid();
 	init_window();
+
+	//randomly choose spawning spot
+	srand(time(NULL));
+	for (int i=0; i<10; i++){
+		int x = rand()%20;
+		int y = rand()%20;	
+		spawn_at('G',y,x);
+	}
+}
+
+void Console::init_grid(){
+	Object* dummy = new Object('_',0,0,0);
+	grid = vector< vector<Object*> >(grid_length, vector<Object*>(grid_length,dummy));
 }
 
 /*
@@ -25,10 +38,15 @@ void Console::init_window(){
 				   (w.ws_row+panel_length)/2+2,(w.ws_col-grid_length*2)/2);
 }
 
-void Console::init_grid(){
-	Object* dummy = new Object('_',0,0,0);
-	grid = vector< vector<Object*> >(grid_length, vector<Object*>(grid_length,dummy));
+void Console::spawn_at(char name, int y, int x){
+	if(name=='G') {
+		Grass* g = new Grass(y,x);
+		grass.push_back(g);
+		grid[y][x] = grass.back();
+	}
+
 }
+
 
 void Console::draw(){
 	
@@ -39,9 +57,7 @@ void Console::draw(){
 
 	// draws the grid	
 	for (int y = 0; y < grid_length; y++){
-		// moves cursor to within the border before drawing
 		wmove(g_win,y+1,1);
-		//draws the grid within border
 		for (int x = 0; x < grid_length; x++){
 			waddch(g_win,(grid[y][x])->get_name());
 			if (x!=grid_length-1) {waddch(g_win,' ');}

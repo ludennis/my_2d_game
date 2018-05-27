@@ -9,8 +9,10 @@ Object::Object(char n, int r, int y, int x):name(n),range(r),y(y),x(x){
 	this->x = x;
 }
 
-char Object::get_name(){return this->name;}
+char Object::get_name(){return name;}
 
-void Object::set_name(char c){this->name = c;}
+void Object::set_name(char c){name = c;}
+
+Object* Object::get(){return this;}
 
 Object::~Object(){}

@@ -18,6 +18,7 @@ public:
 	Object();
 	Object(char,int,int,int);	
 
+	Object* get();
 	char get_name();
 	// int get_x();
 	// int get_y();

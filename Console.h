@@ -11,6 +11,7 @@
 #include <time.h>
 
 #include "Object.h"
+#include "Grass.h"
 
 using namespace std;
 
@@ -22,9 +23,13 @@ private:
 	WINDOW * g_win;
 	WINDOW * p_win;
 
+	int round;
+
 	vector< vector<Object*> > grid;
 
-	int round;
+	vector<Grass*> grass;
+
+	
 
 public:
 	
@@ -36,7 +41,7 @@ public:
 	void init_window();
 
 	// void spawn_multiple(char name, int num);
-	// void spawn_at(char name, int row, int col);
+	void spawn_at(char name, int row, int col);
 
 	void draw();
 

@@ -1,18 +1,21 @@
-CFLAGS=-Wall -Wc++11-extensions
+CFLAGS=-g -O0 -Wall -Wc++11-extensions
 LIBS=-lncurses
-OBJS=main.o Console.o Object.o 
+OBJS=main.o Console.o Object.o Grass.o
 
 play: $(OBJS)
 	g++ $(CFLAGS) $(LIBS) -o play $(OBJS)
 
 main.o: main.cpp
-	g++ -c main.cpp
+	g++ -g -O0 -c main.cpp
+
+Grass.o: Grass.cpp Grass.h
+	g++ -g -O0 -c Grass.cpp
 
 Object.o: Object.cpp Object.h
-	g++ -c Object.cpp
+	g++ -g -O0 -c Object.cpp
 
 Console.o: Console.cpp Console.h
-	g++ -c Console.cpp
+	g++ -g -O0 -c Console.cpp
 
 clean:
 	rm -f play *.o 
