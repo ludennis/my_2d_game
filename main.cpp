@@ -28,7 +28,7 @@ int main(){
 
 		last_key = getch();
 
-		// c->update();
+		c->update();
 
 	} while(last_key == ' ' or last_key == KEY_ENTER);
 

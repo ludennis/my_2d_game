@@ -12,6 +12,7 @@
 
 #include "Object.h"
 #include "Grass.h"
+#include "Sheep.h"
 
 using namespace std;
 
@@ -25,10 +26,10 @@ private:
 
 	int round;
 
-	vector< vector<Object*> > grid;
+	vector< vector<Object*> >* grid;
 
 	vector<Grass*> grass;
-
+	vector<Sheep*> sheep;
 	
 
 public:
@@ -45,7 +46,7 @@ public:
 
 	void draw();
 
-	// void update();
+	void update();
 	// void update_round();
 	// void update_objects();
 

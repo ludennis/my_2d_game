@@ -5,7 +5,9 @@
 
 class Grass: public Object{
 public:
-	Grass(int,int);
+	Grass(int,int,vector< vector<Object*> >*);
+
+	void move();
 
 	~Grass();
 };

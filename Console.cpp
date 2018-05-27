@@ -8,16 +8,26 @@ void Console::init(){
 
 	//randomly choose spawning spot
 	srand(time(NULL));
-	for (int i=0; i<10; i++){
-		int x = rand()%20;
-		int y = rand()%20;	
+	for (int i=0; i<5; i++){
+		int x = rand()%grid_length;
+		int y = rand()%grid_length;	
 		spawn_at('G',y,x);
+	}
+
+	for (int i=0; i<10; i++){
+		int x = rand()%grid_length;
+		int y = rand()%grid_length;
+		spawn_at('S',y,x);
 	}
 }
 
 void Console::init_grid(){
-	Object* dummy = new Object('_',0,0,0);
-	grid = vector< vector<Object*> >(grid_length, vector<Object*>(grid_length,dummy));
+	grid = new vector< vector<Object*> >();
+	grid->resize(grid_length);
+	for(int i=0;i<grid_length;i++){
+		(*grid)[i].resize(grid_length);
+	}
+
 }
 
 /*
@@ -40,13 +50,30 @@ void Console::init_window(){
 
 void Console::spawn_at(char name, int y, int x){
 	if(name=='G') {
-		Grass* g = new Grass(y,x);
+		Grass* g = new Grass(y,x,grid);
 		grass.push_back(g);
-		grid[y][x] = grass.back();
+		(*grid)[y][x] = grass.back();
+	} else if (name=='S'){
+		Sheep* s = new Sheep(y,x,grid);
+		sheep.push_back(s);
+		(*grid)[y][x] = sheep.back();
 	}
 
 }
 
+
+void Console::update(){
+
+	round++;
+
+	for(int y=0;y<grid_length;y++){
+		for (int x=0;x<grid_length;x++){
+			if ((*grid)[y][x]!=NULL){
+				((*grid)[y][x])->move();
+			}
+		}
+	}
+}
 
 void Console::draw(){
 	
@@ -59,7 +86,12 @@ void Console::draw(){
 	for (int y = 0; y < grid_length; y++){
 		wmove(g_win,y+1,1);
 		for (int x = 0; x < grid_length; x++){
-			waddch(g_win,(grid[y][x])->get_name());
+			if ((*grid)[y][x]!=NULL){
+				waddch(g_win,((*grid)[y][x])->get_name());	
+			} else {
+				waddch(g_win,'_');
+			}
+			
 			if (x!=grid_length-1) {waddch(g_win,' ');}
 		}
 	}
