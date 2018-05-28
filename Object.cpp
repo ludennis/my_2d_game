@@ -21,6 +21,7 @@ Object::Object(char n, int r, int y, int x, vector< vector<Object*> >* g){
 Object* Object::get(){return this;}
 char Object::get_name(){return this->name;}
 bool Object::has_moved(){return this->moved;}
+int Object::distance_from(Object* obj_ptr){return abs(this->y - obj_ptr->y) + abs(this->x - obj_ptr->x);}
 
 void Object::set_name(char c){this->name = c;}
 void Object::set_moved(bool m){this->moved = m;}

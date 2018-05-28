@@ -13,6 +13,7 @@
 #include "Object.h"
 #include "Grass.h"
 #include "Sheep.h"
+#include "Dog.h"
 
 using namespace std;
 
@@ -28,8 +29,9 @@ private:
 
 	vector< vector<Object*> >* grid;
 
-	vector<Grass*> grass;
-	vector<Sheep*> sheep;
+	// vector<Grass*> grass;
+	// vector<Sheep*> sheep;
+	// vector<Dog*> dogs;
 	
 
 public:
@@ -38,17 +40,13 @@ public:
 
 	void init();
 	void init_grid();
-	// void init_panel();
 	void init_window();
 
-	// void spawn_multiple(char name, int num);
 	void spawn_at(char name, int row, int col);
 
 	void draw();
 
 	void update();
-	// void update_round();
-	// void update_objects();
 
 	~Console();
 

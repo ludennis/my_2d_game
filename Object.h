@@ -7,7 +7,7 @@
 using namespace std;
 
 class Object{
-private:
+protected:
 	char name;
 	int range;
 	int y;
@@ -25,10 +25,11 @@ public:
 	Object* get();
 	char get_name();
 	bool has_moved();
+	int distance_from(Object*);
 	// int get_x();
 	// int get_y();
 	// int get_range();
-	// int distance_from(Object);
+	
 
 	virtual void move();
 	void set_moved(bool);

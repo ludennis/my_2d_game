@@ -9,16 +9,22 @@ void Console::init(){
 	//set the seef for random numbers
 	srand(time(NULL));
 
-	for (int i=0; i<5; i++){
+	for (int i=0; i<5; ++i){
 		int x = rand()%grid_length;
 		int y = rand()%grid_length;	
 		spawn_at('G',y,x);
 	}
 
-	for (int i=0; i<10; i++){
+	for (int i=0; i<10; ++i){
 		int x = rand()%grid_length;
 		int y = rand()%grid_length;
 		spawn_at('S',y,x);
+	}
+
+	for (int i=0; i<1; ++i){
+		int x = rand()%grid_length;
+		int y = rand()%grid_length;
+		spawn_at('D',y,x);
 	}
 }
 
@@ -51,13 +57,20 @@ void Console::init_window(){
 
 void Console::spawn_at(char name, int y, int x){
 	if(name=='G') {
-		Grass* g = new Grass(y,x,grid);
-		grass.push_back(g);
-		(*grid)[y][x] = grass.back();
+		// Grass* g = new Grass(y,x,grid);
+		// grass.push_back(g);
+		// (*grid)[y][x] = grass.back();
+		(*grid)[y][x] = new Grass(y,x,grid);
 	} else if (name=='S'){
-		Sheep* s = new Sheep(y,x,grid);
-		sheep.push_back(s);
-		(*grid)[y][x] = sheep.back();
+		// Sheep* s = new Sheep(y,x,grid);
+		// sheep.push_back(s);
+		// (*grid)[y][x] = sheep.back();
+		(*grid)[y][x] = new Sheep(y,x,grid);
+	} else if (name=='D'){
+		// Dog* d = new Dog(y,x,grid);
+		// dogs.push_back(d);
+		// (*grid)[y][x] = dogs.back();
+		(*grid)[y][x] = new Dog(y,x,grid);
 	}
 
 }

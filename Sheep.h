@@ -8,6 +8,8 @@ public:
 	Sheep();
 	Sheep(int,int,vector< vector<Object*> >*);
 	
+	void move();
+
 	~Sheep();
 };
 
