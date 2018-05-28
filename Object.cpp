@@ -28,7 +28,6 @@ int Object::distance_from(Object* target){return abs(this->y - target->y) + abs(
 Object* Object::find_nearest_target(char target_name){
 	int shortest_distance = grid->size() * 2;
 	Object* target = NULL;
-
 	for (int yy=0; yy<grid->size();++yy){
 		for (int xx=0; xx<(*grid)[0].size();++xx){
 			if((*grid)[yy][xx]!=NULL && ((*grid)[yy][xx])->get_name()==target_name){
@@ -55,18 +54,10 @@ void Object::move(){
 	int dir;
 	for (int i=0; i<range;++i){
 		dir = rand()%5;
-		if (dir==UP){
-			if (y-1>=0 && (*grid)[y-1][x]==NULL) move_u();
-		}
-		else if (dir==DOWN){
-			if (y+1<20 && (*grid)[y+1][x]==NULL) move_d();
-		}
-		else if (dir==LEFT){
-			if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();
-		} 
-		else if (dir==RIGHT){
-			if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();
-		}
+		if (dir==UP){if (y-1>=0 && (*grid)[y-1][x]==NULL) move_u();}
+		else if (dir==DOWN){if (y+1<20 && (*grid)[y+1][x]==NULL) move_d();}
+		else if (dir==LEFT){if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();} 
+		else if (dir==RIGHT){if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();}
 	}
 	if (prev_x == x && prev_y == y) return;
 	else {
@@ -81,18 +72,10 @@ void Object::seek(Object* target){
 	int prev_y = y;
 
 	for (int i=0; i<range;++i){
-		if (y > target->get_y()){
-			if (y-1>=0 && (*grid)[y-1][x]==NULL) move_u();
-		}
-		else if (y < target->get_y()){
-			if (y+1<20 && (*grid)[y+1][x]==NULL) move_d();
-		}
-		else if (x > target->get_x()){
-			if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();
-		} 
-		else if (x < target->get_x()){
-			if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();
-		}
+		if (y > target->get_y()){if (y-1>=0 && (*grid)[y-1][x]==NULL) move_u();}
+		else if (y < target->get_y()){if (y+1<20 && (*grid)[y+1][x]==NULL) move_d();}
+		else if (x > target->get_x()){if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();} 
+		else if (x < target->get_x()){if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();}
 	}
 	if (prev_x == x && prev_y == y) return;
 	else {
@@ -100,6 +83,12 @@ void Object::seek(Object* target){
 		(*grid)[prev_y][prev_x]=NULL;	
 	}
 	this->moved = true;
+}
+
+void Object::attack(Object*& target){
+	(*grid)[target->get_y()][target->get_x()]=NULL;
+	delete target;
+
 }
 
 

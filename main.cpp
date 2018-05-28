@@ -25,11 +25,8 @@ int main(){
 
 	do {
 		c->draw();
-
 		last_key = getch();
-
 		c->update();
-
 	} while(last_key == ' ' or last_key == KEY_ENTER);
 
 	//ending curses

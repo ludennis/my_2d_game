@@ -35,6 +35,7 @@ public:
 
 	virtual void move();
 	void seek(Object*);
+	void attack(Object*&);
 	void set_moved(bool);
 	void move_u();
 	void move_d();

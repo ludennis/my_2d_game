@@ -4,20 +4,16 @@ Sheep::Sheep(){}
 
 Sheep::Sheep(int y, int x, vector< vector<Object*> >* g):Object('S',2,y,x,g){}
 
+/* finds and seeks after the nearest grass */
 void Sheep::move(){
-	// finds nearest grass
 	Object* nearest_grass = Object::find_nearest_target('G');
-
-	// if no grass then idle
-	// else moves toward it
-	if (nearest_grass == NULL){
-		return;
-	} else {
-		this->seek(nearest_grass);
+	if (nearest_grass == NULL){return;} 
+	else {
+		if (distance_from(nearest_grass) == 1){
+			attack(nearest_grass);
+		}
+		else{this->seek(nearest_grass);}
 	}
-	
-
-	
 }
 
 Sheep::~Sheep(){}
