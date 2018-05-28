@@ -13,7 +13,7 @@ protected:
 	int y;
 	int x;
 
-	bool moved;
+	bool done;
 
 	vector< vector<Object*> >* grid;
 
@@ -24,7 +24,7 @@ public:
 
 	Object* get();
 	char get_name();
-	bool has_moved();
+	bool is_done();
 	int distance_from(Object*);
 	Object* find_nearest_target(char);
 	int get_x();
@@ -34,9 +34,9 @@ public:
 	
 
 	virtual void move();
-	void seek(Object*);
-	void attack(Object*&);
-	void set_moved(bool);
+	virtual void seek(Object*);
+	virtual void attack();
+	void set_done(bool);
 	void move_u();
 	void move_d();
 	void move_l();

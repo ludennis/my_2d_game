@@ -14,6 +14,7 @@
 #include "Grass.h"
 #include "Sheep.h"
 #include "Dog.h"
+#include "Wolf.h"
 
 using namespace std;
 
@@ -29,10 +30,10 @@ private:
 
 	vector< vector<Object*> >* grid;
 
-	// vector<Grass*> grass;
-	// vector<Sheep*> sheep;
-	// vector<Dog*> dogs;
-	
+	int max_grass;
+	int max_sheep_lamb;
+	int max_wolf;
+	int max_dog;	
 
 public:
 	
@@ -42,7 +43,11 @@ public:
 	void init_grid();
 	void init_window();
 
-	void spawn_at(char name, int row, int col);
+	int count(char);
+	int get_round();
+
+	void spawn(char);
+	void spawn_multiple(char,int);
 
 	void draw();
 

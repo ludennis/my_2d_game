@@ -15,16 +15,17 @@ Object::Object(char n, int r, int y, int x, vector< vector<Object*> >* g){
 	this->y = y;
 	this->x = x;
 	this->grid = g;
-	this->moved = false;
+	this->done = false;
 }
 
 Object* Object::get(){return this;}
 char Object::get_name(){return this->name;}
-bool Object::has_moved(){return this->moved;}
+bool Object::is_done(){return this->done;}
 int Object::get_x(){return this->x;}
 int Object::get_y(){return this->y;}
 vector< vector<Object*> >* Object::get_grid(){return this->grid;}
 int Object::distance_from(Object* target){return abs(this->y - target->y) + abs(this->x - target->x);}
+
 Object* Object::find_nearest_target(char target_name){
 	int shortest_distance = grid->size() * 2;
 	Object* target = NULL;
@@ -43,11 +44,13 @@ Object* Object::find_nearest_target(char target_name){
 }
 
 void Object::set_name(char c){this->name = c;}
-void Object::set_moved(bool m){this->moved = m;}
+void Object::set_done(bool d){this->done = d;}
 void Object::move_u(){--y;}
 void Object::move_d(){++y;}
 void Object::move_l(){--x;}
 void Object::move_r(){++x;}
+
+/* moves in random direction within range */
 void Object::move(){
 	int prev_x = x;
 	int prev_y = y;
@@ -64,7 +67,7 @@ void Object::move(){
 		(*grid)[y][x]=(*grid)[prev_y][prev_x];
 		(*grid)[prev_y][prev_x]=NULL;	
 	}
-	this->moved = true;
+	this->done = true;
 }
 
 void Object::seek(Object* target){
@@ -82,14 +85,10 @@ void Object::seek(Object* target){
 		(*grid)[y][x]=(*grid)[prev_y][prev_x];
 		(*grid)[prev_y][prev_x]=NULL;	
 	}
-	this->moved = true;
+	this->done = true;
 }
 
-void Object::attack(Object*& target){
-	(*grid)[target->get_y()][target->get_x()]=NULL;
-	delete target;
-
-}
+void Object::attack(){return;}
 
 
 Object::~Object(){}

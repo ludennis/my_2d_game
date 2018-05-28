@@ -6,26 +6,17 @@ void Console::init(){
 	init_grid();
 	init_window();
 
+	max_grass=15;
+	max_sheep_lamb=20;
+	max_wolf=1;
+	max_dog=1;
+
 	//set the seef for random numbers
 	srand(time(NULL));
 
-	for (int i=0; i<5; ++i){
-		int x = rand()%grid_length;
-		int y = rand()%grid_length;	
-		spawn_at('G',y,x);
-	}
-
-	for (int i=0; i<10; ++i){
-		int x = rand()%grid_length;
-		int y = rand()%grid_length;
-		spawn_at('S',y,x);
-	}
-
-	for (int i=0; i<1; ++i){
-		int x = rand()%grid_length;
-		int y = rand()%grid_length;
-		spawn_at('D',y,x);
-	}
+	spawn_multiple('G',5);
+	spawn_multiple('S',10);
+	spawn_multiple('D',1);
 }
 
 void Console::init_grid(){
@@ -37,9 +28,7 @@ void Console::init_grid(){
 
 }
 
-/*
-	initialize the displaying windows of grid and panel
-*/
+/* initialize the displaying windows of grid and panel */
 void Console::init_window(){
 	// get the size of terminal with ioctl
 	// terminal line = w.ws_row = y
@@ -55,22 +44,26 @@ void Console::init_window(){
 				   (w.ws_row+panel_length)/2+2,(w.ws_col-grid_length*2)/2);
 }
 
-void Console::spawn_at(char name, int y, int x){
-	if(name=='G') {
-		// Grass* g = new Grass(y,x,grid);
-		// grass.push_back(g);
-		// (*grid)[y][x] = grass.back();
+void Console::spawn_multiple(char name, int n) {for(int i=0;i<n;i++){spawn(name);}}
+
+void Console::spawn(char name){
+
+	int y = rand()%grid_length;
+	int x = rand()%grid_length;
+
+	if ((*grid)[y][x] != NULL){
+		y = rand()%grid_length;
+		x = rand()%grid_length;
+	}
+
+	if(name=='G' && count('G')<max_grass) {
 		(*grid)[y][x] = new Grass(y,x,grid);
-	} else if (name=='S'){
-		// Sheep* s = new Sheep(y,x,grid);
-		// sheep.push_back(s);
-		// (*grid)[y][x] = sheep.back();
+	} else if (name=='S' && count('S')<max_sheep_lamb){
 		(*grid)[y][x] = new Sheep(y,x,grid);
-	} else if (name=='D'){
-		// Dog* d = new Dog(y,x,grid);
-		// dogs.push_back(d);
-		// (*grid)[y][x] = dogs.back();
+	} else if (name=='D' && count('D')<max_dog){
 		(*grid)[y][x] = new Dog(y,x,grid);
+	} else if (name=='W' && count('W')<max_wolf){
+		(*grid)[y][x] = new Wolf(y,x,grid);
 	}
 
 }
@@ -80,21 +73,33 @@ void Console::update(){
 
 	round++;
 
+	// reset all objects
 	for(int y=0;y<grid_length;y++){
 		for (int x=0;x<grid_length;x++){
 			if ((*grid)[y][x]!=NULL){
-				((*grid)[y][x])->set_moved(false);
+				((*grid)[y][x])->set_done(false);
 			}
 		}
 	}
 
+	// attack or move
 	for(int y=0;y<grid_length;y++){
 		for (int x=0;x<grid_length;x++){
-			if ((*grid)[y][x]!=NULL and !((*grid)[y][x])->has_moved()){
+			if ((*grid)[y][x]!=NULL && !((*grid)[y][x])->is_done()){
+				((*grid)[y][x])->attack();
+			}
+			if ((*grid)[y][x]!=NULL && !((*grid)[y][x])->is_done()){
 				((*grid)[y][x])->move();
 			}
 		}
 	}
+
+	// allocating more objects
+	//if (count('S')<10){spawn_multiple('G',5);}
+	//else {spawn_multiple('G',3);}
+
+	if(round==6){spawn('W');}
+
 }
 
 void Console::draw(){
@@ -126,6 +131,17 @@ void Console::draw(){
 	wrefresh(g_win);
 	wrefresh(p_win);
 
+}
+
+int Console::get_round(){return this->round;}
+int Console::count(char name){
+	int n = 0;
+	for (int y=0; y<grid_length;y++){
+		for (int x=0; x<grid_length;x++){
+			if ((*grid)[y][x]!=NULL && ((*grid)[y][x])->get_name()==name) n++;
+		}
+	}
+	return n;
 }
 
 

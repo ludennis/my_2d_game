@@ -9,6 +9,7 @@ public:
 	Sheep(int,int,vector< vector<Object*> >*);
 	
 	void move();
+	void attack();
 
 	~Sheep();
 };
