@@ -28,7 +28,6 @@ void Console::init_grid(){
 
 }
 
-/* initialize the displaying windows of grid and panel */
 void Console::init_window(){
 	// get the size of terminal with ioctl
 	// terminal line = w.ws_row = y
@@ -58,12 +57,14 @@ void Console::spawn(char name){
 
 	if(name=='G' && count('G')<max_grass) {
 		(*grid)[y][x] = new Grass(y,x,grid);
-	} else if (name=='S' && count('S')<max_sheep_lamb){
+	} else if (name=='S' && count('S')+count('L')<max_sheep_lamb){
 		(*grid)[y][x] = new Sheep(y,x,grid);
 	} else if (name=='D' && count('D')<max_dog){
 		(*grid)[y][x] = new Dog(y,x,grid);
 	} else if (name=='W' && count('W')<max_wolf){
 		(*grid)[y][x] = new Wolf(y,x,grid);
+	} else if (name=='L' && count('S')+count('L')<max_sheep_lamb){
+		(*grid)[y][x] = new Lamb(y,x,grid);
 	}
 
 }
@@ -95,8 +96,11 @@ void Console::update(){
 	}
 
 	// allocating more objects
-	//if (count('S')<10){spawn_multiple('G',5);}
-	//else {spawn_multiple('G',3);}
+	if (count('S')+count('L')<10){spawn_multiple('G',5);}
+	else {spawn_multiple('G',3);}
+
+	if (count('S')+count('L')<=10){spawn_multiple('L',2);}
+	else {spawn('L');}
 
 	if(round==6){spawn('W');}
 
@@ -126,6 +130,14 @@ void Console::draw(){
 	// draws the panel
 	wmove(p_win,1,1);
 	wprintw(p_win,"Round: %d",round);
+
+	//shows other info on the side
+	
+	mvwprintw(stdscr,10,10,"Number of Grass: %d (max: %d)",count('G'),max_grass);
+	mvwprintw(stdscr,11,10,"Number of Sheep: %d (max: %d)",count('S'),max_sheep_lamb);
+	mvwprintw(stdscr,12,10,"Number of Lamb:  %d (max: %d)",count('L'),max_sheep_lamb);
+	mvwprintw(stdscr,13,10,"Number of Dog:   %d (max: %d)",count('D'),max_dog);
+	mvwprintw(stdscr,14,10,"Number of Wolf:  %d (max: %d)",count('W'),max_wolf);
 
 	//refresh window to show modification
 	wrefresh(g_win);

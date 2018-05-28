@@ -7,6 +7,7 @@ class Sheep: public Object{
 public:
 	Sheep();
 	Sheep(int,int,vector< vector<Object*> >*);
+	Sheep(char,int,int,int,vector< vector<Object*> >*);
 	
 	void move();
 	void attack();

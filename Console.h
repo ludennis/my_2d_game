@@ -15,6 +15,7 @@
 #include "Sheep.h"
 #include "Dog.h"
 #include "Wolf.h"
+#include "Lamb.h"
 
 using namespace std;
 

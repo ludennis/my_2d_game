@@ -8,6 +8,9 @@ public:
 	Dog();
 	Dog(int,int,vector< vector<Object*> >*);
 
+	void move();
+	void attack();
+
 	~Dog();
 };
 

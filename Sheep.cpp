@@ -2,6 +2,7 @@
 
 Sheep::Sheep(){}
 Sheep::Sheep(int y, int x, vector< vector<Object*> >* g):Object('S',2,y,x,g){}
+Sheep::Sheep(char name,int r, int y, int x, vector< vector<Object*> >*g):Object(name,r,y,x,g){}
 
 void Sheep::attack(){
 	Object* nearest_grass = Object::find_nearest_target('G');
