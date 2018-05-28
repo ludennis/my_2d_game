@@ -6,8 +6,9 @@ void Console::init(){
 	init_grid();
 	init_window();
 
-	//randomly choose spawning spot
+	//set the seef for random numbers
 	srand(time(NULL));
+
 	for (int i=0; i<5; i++){
 		int x = rand()%grid_length;
 		int y = rand()%grid_length;	
@@ -69,6 +70,14 @@ void Console::update(){
 	for(int y=0;y<grid_length;y++){
 		for (int x=0;x<grid_length;x++){
 			if ((*grid)[y][x]!=NULL){
+				((*grid)[y][x])->set_moved(false);
+			}
+		}
+	}
+
+	for(int y=0;y<grid_length;y++){
+		for (int x=0;x<grid_length;x++){
+			if ((*grid)[y][x]!=NULL and !((*grid)[y][x])->has_moved()){
 				((*grid)[y][x])->move();
 			}
 		}
