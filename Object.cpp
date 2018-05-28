@@ -21,7 +21,27 @@ Object::Object(char n, int r, int y, int x, vector< vector<Object*> >* g){
 Object* Object::get(){return this;}
 char Object::get_name(){return this->name;}
 bool Object::has_moved(){return this->moved;}
-int Object::distance_from(Object* obj_ptr){return abs(this->y - obj_ptr->y) + abs(this->x - obj_ptr->x);}
+int Object::get_x(){return this->x;}
+int Object::get_y(){return this->y;}
+vector< vector<Object*> >* Object::get_grid(){return this->grid;}
+int Object::distance_from(Object* target){return abs(this->y - target->y) + abs(this->x - target->x);}
+Object* Object::find_nearest_target(char target_name){
+	int shortest_distance = grid->size() * 2;
+	Object* target = NULL;
+
+	for (int yy=0; yy<grid->size();++yy){
+		for (int xx=0; xx<(*grid)[0].size();++xx){
+			if((*grid)[yy][xx]!=NULL && ((*grid)[yy][xx])->get_name()==target_name){
+				int distance = this->distance_from((*grid)[yy][xx]);
+				if (distance < shortest_distance) {
+					shortest_distance = distance;
+					target=(*grid)[yy][xx];
+				}
+			}
+		}
+	}
+	return target;
+}
 
 void Object::set_name(char c){this->name = c;}
 void Object::set_moved(bool m){this->moved = m;}
@@ -45,6 +65,32 @@ void Object::move(){
 			if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();
 		} 
 		else if (dir==RIGHT){
+			if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();
+		}
+	}
+	if (prev_x == x && prev_y == y) return;
+	else {
+		(*grid)[y][x]=(*grid)[prev_y][prev_x];
+		(*grid)[prev_y][prev_x]=NULL;	
+	}
+	this->moved = true;
+}
+
+void Object::seek(Object* target){
+	int prev_x = x;
+	int prev_y = y;
+
+	for (int i=0; i<range;++i){
+		if (y > target->get_y()){
+			if (y-1>=0 && (*grid)[y-1][x]==NULL) move_u();
+		}
+		else if (y < target->get_y()){
+			if (y+1<20 && (*grid)[y+1][x]==NULL) move_d();
+		}
+		else if (x > target->get_x()){
+			if (x-1>=0 && (*grid)[y][x-1]==NULL) move_l();
+		} 
+		else if (x < target->get_x()){
 			if (x+1<20 and (*grid)[y][x+1]==NULL) move_r();
 		}
 	}

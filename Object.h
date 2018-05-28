@@ -26,12 +26,15 @@ public:
 	char get_name();
 	bool has_moved();
 	int distance_from(Object*);
-	// int get_x();
-	// int get_y();
+	Object* find_nearest_target(char);
+	int get_x();
+	int get_y();
+	vector< vector<Object*> >* get_grid();
 	// int get_range();
 	
 
 	virtual void move();
+	void seek(Object*);
 	void set_moved(bool);
 	void move_u();
 	void move_d();
