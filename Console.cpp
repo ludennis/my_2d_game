@@ -17,12 +17,9 @@ void Console::init(){
 	srand(time(NULL));
 
 	spawn_multiple('G',5);
-	spawn('D');
+	spawn_multiple('S',10);
+	spawn_multiple('D',1);
 
-	int num_sheep = rand()%10;
-	int num_lamb = 10 - num_sheep;
-	spawn_multiple('S',num_sheep);
-	spawn_multiple('L',num_lamb);
 }
 
 void Console::init_grid(){
