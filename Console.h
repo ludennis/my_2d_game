@@ -16,6 +16,7 @@
 #include "Dog.h"
 #include "Wolf.h"
 #include "Lamb.h"
+#include "Panel.h"
 
 using namespace std;
 
@@ -27,14 +28,15 @@ private:
 	WINDOW * g_win;
 	WINDOW * p_win;
 
-	int round;
-
 	vector< vector<Object*> >* grid;
+	Panel* p;
 
 	int max_grass;
 	int max_sheep_lamb;
 	int max_wolf;
 	int max_dog;	
+
+
 
 public:
 	
@@ -45,6 +47,7 @@ public:
 	void init_window();
 
 	int count(char);
+
 	int get_round();
 
 	void spawn(char);

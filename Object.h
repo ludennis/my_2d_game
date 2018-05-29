@@ -4,6 +4,8 @@
 #include <vector>
 #include <stdlib.h>
 
+#include "Panel.h"
+
 using namespace std;
 
 class Object{
@@ -16,6 +18,7 @@ protected:
 	bool done;
 
 	vector< vector<Object*> >* grid;
+	Panel* p;
 
 public:
 

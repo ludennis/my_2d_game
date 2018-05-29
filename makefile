@@ -1,12 +1,15 @@
 CFLAGS=-g -O0 -Wall -Wc++11-extensions
 LIBS=-lncurses
-OBJS=main.o Console.o Object.o Grass.o Sheep.o Dog.o Wolf.o Lamb.o
+OBJS=main.o Console.o Object.o Grass.o Sheep.o Dog.o Wolf.o Lamb.o Panel.o
 
 play: $(OBJS)
 	g++ $(CFLAGS) $(LIBS) -o play $(OBJS)
 
 main.o: main.cpp
 	g++ -g -O0 -c main.cpp
+
+Panel.o: Panel.cpp Panel.h
+	g++ -g -O0 -c Panel.cpp
 
 Lamb.o: Lamb.cpp Lamb.h
 	g++ -g -O0 -c Lamb.cpp
