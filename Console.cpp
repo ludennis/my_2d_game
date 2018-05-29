@@ -6,7 +6,7 @@ void Console::init(){
 	init_grid();
 	init_window();
 
-	p = new Panel();
+	panel = new Panel();
 
 	max_grass=15;
 	max_sheep_lamb=20;
@@ -17,8 +17,12 @@ void Console::init(){
 	srand(time(NULL));
 
 	spawn_multiple('G',5);
-	spawn_multiple('S',10);
-	spawn_multiple('D',1);
+	spawn('D');
+
+	int num_sheep = rand()%10;
+	int num_lamb = 10 - num_sheep;
+	spawn_multiple('S',num_sheep);
+	spawn_multiple('L',num_lamb);
 }
 
 void Console::init_grid(){
@@ -58,15 +62,15 @@ void Console::spawn(char name){
 	}
 
 	if(name=='G' && count('G')<max_grass) {
-		(*grid)[y][x] = new Grass(y,x,grid);
+		(*grid)[y][x] = new Grass(y,x,grid,panel);
 	} else if (name=='S' && count('S')+count('L')<max_sheep_lamb){
-		(*grid)[y][x] = new Sheep(y,x,grid);
+		(*grid)[y][x] = new Sheep(y,x,grid,panel);
 	} else if (name=='D' && count('D')<max_dog){
-		(*grid)[y][x] = new Dog(y,x,grid);
+		(*grid)[y][x] = new Dog(y,x,grid,panel);
 	} else if (name=='W' && count('W')<max_wolf){
-		(*grid)[y][x] = new Wolf(y,x,grid);
+		(*grid)[y][x] = new Wolf(y,x,grid,panel);
 	} else if (name=='L' && count('S')+count('L')<max_sheep_lamb){
-		(*grid)[y][x] = new Lamb(y,x,grid);
+		(*grid)[y][x] = new Lamb(y,x,grid,panel);
 	}
 
 }
@@ -74,7 +78,7 @@ void Console::spawn(char name){
 
 void Console::update(){
 
-	p->inc_round();
+	panel->inc_round();
 
 	// reset all objects
 	for(int y=0;y<grid_length;y++){
@@ -91,20 +95,25 @@ void Console::update(){
 			if ((*grid)[y][x]!=NULL && !((*grid)[y][x])->is_done()){
 				((*grid)[y][x])->attack();
 			}
+			draw();
 			if ((*grid)[y][x]!=NULL && !((*grid)[y][x])->is_done()){
 				((*grid)[y][x])->move();
 			}
 		}
 	}
 
-	// allocating more objects
+	// spawns 5 grass or 3 grass
 	if (count('S')+count('L')<10){spawn_multiple('G',5);}
 	else {spawn_multiple('G',3);}
 
+	// spawns 2 lamb or 1 lamb
 	if (count('S')+count('L')<=10){spawn_multiple('L',2);}
 	else {spawn('L');}
 
-	if(p->get_round()==6){spawn('W');}
+//TODO: set a respawn timer for wolf
+	// spawns a wolf at round 6 and every 6-10 round
+	if(panel->get_round()%6==0){spawn('W');}
+
 
 }
 
@@ -130,14 +139,14 @@ void Console::draw(){
 	}
 
 	// draws the panel
-	mvwprintw(p_win,1,1,"Round: %d",p->get_round());
-	mvwprintw(p_win,2,1,"Grass Eaten: %d",p->get_grass_eaten());
-	mvwprintw(p_win,3,1,"Lamb Fed: %d",p->get_lamb_fed());
-	mvwprintw(p_win,4,1,"Sheep Fed: %d",p->get_sheep_fed());
-	mvwprintw(p_win,5,1,"Lamb Eaten: %d",p->get_lamb_eaten());
-	mvwprintw(p_win,6,1,"Sheep Eaten: %d",p->get_sheep_eaten());
-	mvwprintw(p_win,7,1,"Wolf Eaten: %d",p->get_wolf_eaten());
-	mvwprintw(p_win,8,1,"Score: %d",p->get_score());
+	mvwprintw(p_win,1,1,"Round: %d",panel->get_round());
+	mvwprintw(p_win,2,1,"Grass Eaten: %d",panel->get_grass_eaten());
+	mvwprintw(p_win,3,1,"Lamb Fed: %d",panel->get_lamb_fed());
+	mvwprintw(p_win,4,1,"Sheep Fed: %d",panel->get_sheep_fed());
+	mvwprintw(p_win,5,1,"Lamb Eaten: %d",panel->get_lamb_eaten());
+	mvwprintw(p_win,6,1,"Sheep Eaten: %d",panel->get_sheep_eaten());
+	mvwprintw(p_win,7,1,"Wolf Eaten: %d",panel->get_wolf_eaten());
+	mvwprintw(p_win,8,1,"Score: %d",panel->get_score());
 
 	//shows other info on the left side
 	mvwprintw(stdscr,10,10,"Number of Grass: %d (max: %d)",count('G'),max_grass);
@@ -153,7 +162,7 @@ void Console::draw(){
 }
 
 int Console::get_round(){
-	return this->p->get_round();
+	return this->panel->get_round();
 }
 int Console::count(char name){
 	int n = 0;

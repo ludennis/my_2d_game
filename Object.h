@@ -18,12 +18,12 @@ protected:
 	bool done;
 
 	vector< vector<Object*> >* grid;
-	Panel* p;
+	Panel* panel;
 
 public:
 
 	Object();
-	Object(char,int,int,int,vector< vector<Object*> >*);	
+	Object(char,int,int,int,vector< vector<Object*> >*,Panel*);	
 
 	Object* get();
 	char get_name();
@@ -46,7 +46,7 @@ public:
 	void move_r();
 	void set_name(char);
 
-	~Object();
+	virtual ~Object();
 };
 
 #endif

@@ -4,10 +4,10 @@
 #include "Object.h"
 
 class Sheep: public Object{
+	int grass_eaten;
 public:
 	Sheep();
-	Sheep(int,int,vector< vector<Object*> >*);
-	Sheep(char,int,int,int,vector< vector<Object*> >*);
+	Sheep(int,int,vector< vector<Object*> >*,Panel*);
 	
 	void move();
 	void attack();

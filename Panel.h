@@ -23,14 +23,14 @@ public:
 	int get_score();
 	int get_round();
 
-	void set_grass_eaten(int);
-	void set_lamb_fed(int);
-	void set_sheep_fed(int);
-	void set_lamb_eaten(int);
-	void set_sheep_eaten(int);
-	void set_wolf_eaten(int);
-	void set_score(int);
+	void inc_grass_eaten();
+	void inc_lamb_fed();
+	void inc_sheep_fed();
+	void inc_lamb_eaten();
+	void inc_sheep_eaten();
+	void inc_wolf_eaten();
 	void inc_round();
+	void inc_score(int);
 
 	~Panel();
 };

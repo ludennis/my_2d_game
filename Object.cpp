@@ -9,12 +9,13 @@
 
 Object::Object(){}
 
-Object::Object(char n, int r, int y, int x, vector< vector<Object*> >* g){
+Object::Object(char n, int r, int y, int x, vector< vector<Object*> >* g,Panel* p){
 	this->name = n;
 	this->range = r;
 	this->y = y;
 	this->x = x;
 	this->grid = g;
+	this->panel = p;
 	this->done = false;
 }
 

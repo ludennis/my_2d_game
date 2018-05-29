@@ -2,7 +2,7 @@
 #include "Dog.h"
 
 Dog::Dog(){}
-Dog::Dog(int y, int x,vector< vector<Object*> >* g): Object('D',4,y,x,g){}
+Dog::Dog(int y, int x,vector< vector<Object*> >* g,Panel* p): Object('D',4,y,x,g,p){}
 
 void Dog::attack(){
 	Object* nearest_wolf = find_nearest_target('W');
@@ -13,6 +13,7 @@ void Dog::attack(){
 			(*grid)[nearest_wolf->get_y()][nearest_wolf->get_x()] = NULL;
 			delete nearest_wolf;
 			this->set_done(true);
+			this->panel->inc_wolf_eaten();
 		}
 	}
 }

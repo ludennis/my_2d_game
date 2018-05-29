@@ -29,7 +29,7 @@ private:
 	WINDOW * p_win;
 
 	vector< vector<Object*> >* grid;
-	Panel* p;
+	Panel* panel;
 
 	int max_grass;
 	int max_sheep_lamb;
