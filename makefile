@@ -8,29 +8,30 @@ play: $(OBJS)
 main.o: main.cpp
 	g++ -g -O0 -c main.cpp
 
-Panel.o: Panel.cpp Panel.h
-	g++ -g -O0 -c Panel.cpp
+Lamb.o: Objects/Lamb.cpp Objects/Lamb.h
+	g++ -g -O0 -c Objects/Lamb.cpp
 
-Lamb.o: Lamb.cpp Lamb.h
-	g++ -g -O0 -c Lamb.cpp
+Wolf.o: Objects/Wolf.cpp Objects/Wolf.h
+	g++ -g -O0 -c Objects/Wolf.cpp
 
-Wolf.o: Wolf.cpp Wolf.h
-	g++ -g -O0 -c Wolf.cpp
+Dog.o: Objects/Dog.cpp Objects/Dog.h
+	g++ -g -O0 -c Objects/Dog.cpp
 
-Dog.o: Dog.cpp Dog.h
-	g++ -g -O0 -c Dog.cpp
+Sheep.o: Objects/Sheep.cpp Objects/Sheep.h
+	g++ -g -O0 -c Objects/Sheep.cpp
 
-Sheep.o: Sheep.cpp Sheep.h
-	g++ -g -O0 -c Sheep.cpp
+Grass.o: Objects/Grass.cpp Objects/Grass.h
+	g++ -g -O0 -c Objects/Grass.cpp
 
-Grass.o: Grass.cpp Grass.h
-	g++ -g -O0 -c Grass.cpp
+Object.o: Objects/Object.cpp Objects/Object.h
+	g++ -g -O0 -c Objects/Object.cpp
 
-Object.o: Object.cpp Object.h
-	g++ -g -O0 -c Object.cpp
+Console.o: Console/Console.cpp Console/Console.h
+	g++ -g -O0 -c Console/Console.cpp
 
-Console.o: Console.cpp Console.h
-	g++ -g -O0 -c Console.cpp
+Panel.o: Console/Panel.cpp Console/Panel.h
+	g++ -g -O0 -c Console/Panel.cpp
+
 
 clean:
 	rm -f play *.o 

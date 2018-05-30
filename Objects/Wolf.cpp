@@ -2,7 +2,10 @@
 #include "Wolf.h"
 
 Wolf::Wolf(){}
-Wolf::Wolf(int y, int x, vector< vector<Object*> >* g,Panel* p): Object('W',3,y,x,g,p){}
+Wolf::Wolf(int y, int x, vector< vector<Object*> >* g,Panel* p): Object('W',3,y,x,g,p){
+	this->sheep_eaten=0;
+	this->lamb_eaten=0;
+}
 
 void Wolf::attack(){
 	//finds nearest sheep
@@ -25,7 +28,7 @@ void Wolf::attack(){
 	} 
 
 	// wolf leaves after eating 3 lamb/sheep
-	if (this->get_lamb_eaten() + this->get_sheep_eaten() == 3){
+	if (this->get_lamb_eaten() + this->get_sheep_eaten() >= 3){
 		(*grid)[this->get_y()][this->get_x()] = NULL;
 		delete this;
 	}

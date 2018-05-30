@@ -1,8 +1,8 @@
 #include <iostream>
 #include <ncurses.h>
 
-#include "Object.h"
-#include "Console.h"
+#include "Objects/Object.h"
+#include "Console/Console.h"
 
 #ifdef KEY_ENTER
 #undef KEY_ENTER
@@ -18,6 +18,8 @@ int main(){
 	noecho();
 	cbreak();
 	keypad(stdscr, TRUE);
+	start_color();
+	curs_set(0);
 
 	Console *c = new Console(20,10);
 	c->init();
